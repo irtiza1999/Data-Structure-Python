@@ -245,14 +245,151 @@
 
 # Doubly Linked List
 
+# class Node:
+#     def __init__(self, value=None):
+#         self.prev = None
+#         self.value = value
+#         self.next = None
+#
+#
+# class DoublySLL:
+#     def __init__(self):
+#         self.head = None
+#         self.tail = None
+#
+#     def __iter__(self):
+#         node = self.head
+#         while node:
+#             yield node
+#             node = node.next
+#
+#     def createDSLL(self, nodeValue):
+#         node = Node(nodeValue)
+#         node.prev = None
+#         node.next = None
+#         self.head = node
+#         self.tail = node
+#         print("DSLL created!!")
+#
+#     def insertNode(self, nodeValue, location):
+#         if self.head is None:
+#             print("The node can not be inserted!!")
+#         else:
+#             newNode = Node(nodeValue)
+#             if location == 0:
+#                 newNode.prev = None
+#                 newNode.next = self.head
+#                 self.head.prev = newNode
+#                 self.head = newNode
+#             elif location == 1:
+#                 newNode.next = None
+#                 newNode.prev = self.tail
+#                 self.tail.next = newNode
+#                 self.tail = newNode
+#             else:
+#                 tempNode = self.head
+#                 index = 0
+#                 while index < location - 1:
+#                     tempNode = tempNode.next
+#                     index += 1
+#                 newNode.next = tempNode.next
+#                 newNode.prev = tempNode
+#                 newNode.next.prev = newNode
+#                 tempNode.next = newNode
+#
+#     def treversalDSLL(self):
+#         if self.head is None:
+#             print("No DSLL!!")
+#         else:
+#             tempNode = self.head
+#             while tempNode:
+#                 print(tempNode.value, end=" ")
+#                 tempNode = tempNode.next
+#
+#     def reverseDSLL(self):
+#         if self.head is None:
+#             print("No emelmets!!")
+#         else:
+#             tempNode = self.tail
+#             while tempNode:
+#                 print(tempNode.value, end=" ")
+#                 tempNode = tempNode.prev
+#
+#     def searchNode(self, nodeValue):
+#         if self.head is None:
+#             print("No elements!!")
+#         else:
+#             tempNode = self.head
+#             while tempNode:
+#                 if tempNode.value == nodeValue:
+#                     return tempNode.value
+#
+#                 tempNode = tempNode.next
+#             return "Node not in list!!"
+#
+#     def deleteNode(self, location):
+#         if self.head is None:
+#             print("No elemet in list!!")
+#         else:
+#             if location == 0:
+#                 if self.head == self.tail:
+#                     self.head = None
+#                     self.tail = None
+#                 else:
+#                     self.head = self.head.next
+#                     self.head.prev = None
+#             elif location == 1:
+#                 if self.head == self.tail:
+#                     self.head = None
+#                     self.tail = None
+#                 else:
+#                     self.tail = self.tail.prev
+#                     self.tail.next = None
+#             else:
+#                 curNode = self.head
+#                 index = 0
+#                 while index < location - 1:
+#                     curNode = curNode.next
+#                     index += 1
+#                 curNode.next = curNode.next.next
+#                 curNode.next.prev = curNode
+#                 print("Success..")
+#
+#     def deleteAll(self):
+#         if self.head is None:
+#                 print("No head is here!!")
+#         else:
+#             tempNode = self.head
+#             while tempNode:
+#                 tempNode.prev = None
+#                 tempNode = tempNode.next
+#             self.head = None
+#             self.tail = None
+#             print("Deleted!!")
+#
+# doublySLL = DoublySLL()
+# doublySLL.createDSLL(1)
+# print(list(node.value for node in doublySLL))
+# doublySLL.insertNode(2, 0)
+# doublySLL.insertNode(3, 1)
+# doublySLL.insertNode(4, 1)
+# print(list(node.value for node in doublySLL))
+# print(doublySLL.deleteNode(-1))
+# print(list(node.value for node in doublySLL))
+# doublySLL.deleteAll()
+# print(list(node.value for node in doublySLL))
+
+
+# Circular Doubly Linked List
+
 class Node:
     def __init__(self, value=None):
-        self.prev = None
         self.value = value
         self.next = None
+        self.prev = None
 
 
-class DoublySLL:
+class CircularDoublyLL:
     def __init__(self):
         self.head = None
         self.tail = None
@@ -262,28 +399,32 @@ class DoublySLL:
         while node:
             yield node
             node = node.next
+            if node == self.tail.next:
+                break
 
-    def createDSLL(self, nodeValue):
-        node = Node(nodeValue)
-        node.prev = None
-        node.next = None
-        self.head = node
-        self.tail = node
-        print("DSLL created!!")
+    def createCDLL(self, nodeValue):
+        newNode = Node(nodeValue)
+        self.head = newNode
+        self.tail = newNode
+        newNode.prev = newNode
+        newNode.next = newNode
+        return "The CDLL created!!"
 
-    def insertNode(self, nodeValue, location):
+    def insertCDLL(self, value, location):
         if self.head is None:
-            print("The node can not be inserted!!")
+            return "The CDLL does not exist!!"
         else:
-            newNode = Node(nodeValue)
+            newNode = Node(value)
             if location == 0:
-                newNode.prev = None
                 newNode.next = self.head
+                newNode.prev = self.tail
                 self.head.prev = newNode
                 self.head = newNode
+                self.tail.next = newNode
             elif location == 1:
-                newNode.next = None
+                newNode.next = self.head
                 newNode.prev = self.tail
+                self.head.prev = newNode
                 self.tail.next = newNode
                 self.tail = newNode
             else:
@@ -296,85 +437,94 @@ class DoublySLL:
                 newNode.prev = tempNode
                 newNode.next.prev = newNode
                 tempNode.next = newNode
+            return "The added successfully!!"
 
-    def treversalDSLL(self):
+    def treversalCDLL(self):
         if self.head is None:
-            print("No DSLL!!")
+            print("No node!!")
         else:
             tempNode = self.head
             while tempNode:
                 print(tempNode.value, end=" ")
+                if tempNode == self.tail:
+                    break
                 tempNode = tempNode.next
 
-    def reverseDSLL(self):
+    def reverseTCDLL(self):
         if self.head is None:
-            print("No emelmets!!")
+            print("No node exicts!!")
         else:
             tempNode = self.tail
             while tempNode:
                 print(tempNode.value, end=" ")
+                if tempNode == self.head:
+                    break
                 tempNode = tempNode.prev
 
-    def searchNode(self, nodeValue):
+    def searchCDLL(self, nodeValue):
         if self.head is None:
-            print("No elements!!")
+            return "There is no node!!"
         else:
             tempNode = self.head
             while tempNode:
                 if tempNode.value == nodeValue:
                     return tempNode.value
-
+                if tempNode == self.tail:
+                    return "Value is not in list"
                 tempNode = tempNode.next
-            return "Node not in list!!"
 
-    def deleteNode(self, location):
+    def deleteCDLL(self, loaction):
         if self.head is None:
-            print("No elemet in list!!")
+            print("No node avalible!!")
         else:
-            if location == 0:
+            if loaction == 0:
                 if self.head == self.tail:
+                    self.head.prev = None
+                    self.head.next = None
                     self.head = None
                     self.tail = None
                 else:
                     self.head = self.head.next
-                    self.head.prev = None
-            elif location == 1:
+                    self.head.prev = self.tail
+                    self.tail.next = self.head
+            elif loaction == 1:
                 if self.head == self.tail:
+                    self.head.prev = None
+                    self.head.next = None
                     self.head = None
                     self.tail = None
                 else:
                     self.tail = self.tail.prev
-                    self.tail.next = None
+                    self.tail.next = self.head
+                    self.head.prev = self.tail
             else:
-                curNode = self.head
+                currNode = self.head
                 index = 0
-                while index < location - 1:
-                    curNode = curNode.next
+                while index < loaction - 1:
+                    currNode = currNode.next
                     index += 1
-                curNode.next = curNode.next.next
-                curNode.next.prev = curNode
-                print("Success..")
+                currNode.next = currNode.next.next
+                currNode.next.prev = currNode
+            print("Node deleted")
 
-    def deleteAll(self):
+    def deleteAllCDLL(self):
         if self.head is None:
-                print("No head is here!!")
+            print("No emement")
         else:
+            self.tail.next = None
             tempNode = self.head
             while tempNode:
                 tempNode.prev = None
                 tempNode = tempNode.next
             self.head = None
             self.tail = None
-            print("Deleted!!")
+            print("No more List!!")
 
-doublySLL = DoublySLL()
-doublySLL.createDSLL(1)
-print(list(node.value for node in doublySLL))
-doublySLL.insertNode(2, 0)
-doublySLL.insertNode(3, 1)
-doublySLL.insertNode(4, 1)
-print(list(node.value for node in doublySLL))
-print(doublySLL.deleteNode(-1))
-print(list(node.value for node in doublySLL))
-doublySLL.deleteAll()
-print(list(node.value for node in doublySLL))
+circularDLL = CircularDoublyLL()
+print(circularDLL.createCDLL(5))
+circularDLL.insertCDLL(1, 0)
+circularDLL.insertCDLL(2, -2)
+circularDLL.insertCDLL(3, 1)
+print(list(node.value for node in circularDLL))
+circularDLL.deleteAllCDLL()
+print(list(node.value for node in circularDLL))
