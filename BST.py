@@ -1,6 +1,3 @@
-#   Created by Elshad Karimov 
-#   Copyright © 2020 AppMillers. All rights reserved.
-
 import QueueLinkedList as queue
 
 
@@ -24,7 +21,7 @@ def insertNode(rootNode, nodeValue):
             rootNode.rightChild = BSTNode(nodeValue)
         else:
             insertNode(rootNode.rightChild, nodeValue)
-    return "The node has been successfully inserted"
+    return "Node inserted"
 
 
 def preOrderTraversal(rootNode):
@@ -69,19 +66,22 @@ def levelOrderTraversal(rootNode):
 def searchNode(rootNode, nodeValue):
     if rootNode.data == nodeValue:
         print("The value is found")
+
     elif nodeValue < rootNode.data:
         if rootNode.leftChild.data == nodeValue:
             print("The value is found")
         else:
             searchNode(rootNode.leftChild, nodeValue)
-    else:
+    elif nodeValue > rootNode.data:
         if rootNode.rightChild.data == nodeValue:
             print("The value is found")
         else:
             searchNode(rootNode.rightChild, nodeValue)
+    elif nodeValue != rootNode.data:
+        print("The value was not found!!")
 
 
-def minValueNode(bstNode):
+def minValue(bstNode):
     current = bstNode
     while (current.leftChild is not None):
         current = current.leftChild
@@ -97,16 +97,15 @@ def deleteNode(rootNode, nodeValue):
         rootNode.rightChild = deleteNode(rootNode.rightChild, nodeValue)
     else:
         if rootNode.leftChild is None:
-            temp = rootNode.rightChild
+            tempNode = rootNode.rightChild
             rootNode = None
-            return temp
-
+            return tempNode
         if rootNode.rightChild is None:
-            temp = rootNode.leftChild
+            tempNode = rootNode.leftChild
             rootNode = None
-            return temp
+            return tempNode
 
-        temp = minValueNode(rootNode.rightChild)
+        temp = minValue(rootNode.rightChild)
         rootNode.data = temp.data
         rootNode.rightChild = deleteNode(rootNode.rightChild, temp.data)
     return rootNode
@@ -116,7 +115,7 @@ def deleteBST(rootNode):
     rootNode.data = None
     rootNode.leftChild = None
     rootNode.rightChild = None
-    return "The BST has been successfully deleted"
+    return "BST successfully delete!!"
 
 
 newBST = BSTNode(None)
@@ -129,4 +128,5 @@ insertNode(newBST, 80)
 insertNode(newBST, 100)
 insertNode(newBST, 20)
 insertNode(newBST, 40)
-searchNode(newBST, 40)
+deleteNode(newBST, 70)
+print(deleteBST(newBST))
